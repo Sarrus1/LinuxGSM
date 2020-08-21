@@ -42,6 +42,9 @@ fn_stop_graceful_ctrlc(){
 fn_stop_graceful_cmd(){
 	fn_print_dots "Graceful: sending \"${1}\""
 	fn_script_log_info "Graceful: sending \"${1}\""
+	# Sends restart warning command.
+	tmux send -t "${sessionname}" "sm_csay 'Server is restarting in 30s'" ENTER > /dev/null 2>&1
+	sleep 30
 	# Sends specific stop command.
 	tmux send -t "${sessionname}" "${1}" ENTER > /dev/null 2>&1
 	# Waits up to ${seconds} seconds giving the server time to shutdown gracefully.
